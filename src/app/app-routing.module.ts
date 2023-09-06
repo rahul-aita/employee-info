@@ -1,7 +1,6 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 import { HeaderComponent } from './header/header.component';
-import { UpdateEmployeeComponent } from './modal/update-employee/update-employee.component';
 
 const routes: Routes = [
   {
@@ -11,10 +10,6 @@ const routes: Routes = [
       {
         path: 'emp',
         loadChildren: () => import('src/app/employee/employee.module').then((m) => m.EmployeeModule)
-      },
-      {
-        path:"update",
-        component:UpdateEmployeeComponent
       }
     ]
   },

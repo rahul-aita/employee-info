@@ -2,34 +2,15 @@
   "posts": [
     {
       "id": 1,
-      "name": "rahul kumar ",
-      "department": "cse",
-      "salary": "10000"
+      "name": "rahul",
+      "department": "ff",
+      "salary": 55
     },
     {
       "id": 2,
-      "department": "",
-      "salary": ""
-    },
-    {
-      "id": 3,
-      "department": "",
-      "salary": ""
-    },
-    {
-      "id": 4,
-      "department": "",
-      "salary": ""
-    },
-    {
-      "id": 5,
-      "department": "",
-      "salary": ""
-    },
-    {
-      "id": 6,
-      "department": null,
-      "salary": ""
+      "name": "iuou",
+      "department": "ff",
+      "salary": 66655
     }
   ],
   "comments": [],

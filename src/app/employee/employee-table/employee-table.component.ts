@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
 import { FormBuilder, FormGroup } from '@angular/forms';
 import { Router } from '@angular/router';
 import { ApiService } from 'src/app/services/api.service';
@@ -9,101 +9,95 @@ import { EmployeeInfo } from 'src/app/types/types';
   templateUrl: './employee-table.component.html',
   styleUrls: ['./employee-table.component.scss']
 })
-export class EmployeeTableComponent  implements OnInit{
-  formValue!: FormGroup; 
-
-  employeeObj: EmployeeInfo = new EmployeeInfo;
-
-  allEmp: any;
-
-  btnUpdateShow:boolean = false;
-
-  btnSaveShow:boolean = true;
+export class EmployeeTableComponent implements OnInit {
+  @ViewChild('closeModalButton') closeModalButton!: ElementRef; 
+  public form!: FormGroup; 
+  public employee: EmployeeInfo = new EmployeeInfo(); 
+  public allEmployees: any; 
+  public isUpdateMode: boolean = false;
 
   constructor(
-    private router:Router,
-    private formBuilder:FormBuilder,
-    private api:ApiService
-  ){
+    private router: Router,
+    private formBuilder: FormBuilder,
+    private api: ApiService
+  ) {}
 
-  }
   ngOnInit(): void {
-    this.formValue = this.formBuilder.group({
-      employeeName:[''],
-      department:[''],
-      salary:[''],
-    })
+    this.form = this.formBuilder.group({
+      name: [''],
+      department: [''],
+      salary: [''],
+    });
+    this.getAllEmployees(); // Fetch all employees on component initialization
   }
-  close(){
-this.router.navigate(["home"])
+
+
+//add employee
+  addEmployee(): void {
+    this.isUpdateMode=true
+    if (this.form.valid) {
+      this.employee.name = this.form.value.name;
+      this.employee.department = this.form.value.department;
+      this.employee.salary = this.form.value.salary;
+      this.api.postEmployee(this.employee).subscribe({
+        next: (response) => {
+          alert("Data Saved");
+          this.getAllEmployees();
+          this.form.reset();
+          this.closeModal(); // Close the modal
+       
+        },
+        error: (error) => {
+          console.error('Error:', error);
+          alert("Error occurred");
+        },
+      });
+    } else {
+      // Handle form validation error, e.g., display an error message.
+      alert("Please fill in all required fields.");
+    }
   }
   
-  AddStudent(){
-    this.employeeObj.empployeeName= this.formValue.value.empployeeName;
-    this.employeeObj.department = this.formValue.value.department;
-    this.employeeObj.salary = this.formValue.value.salary;
-    this.api.postStudent(this.employeeObj).subscribe({
-      next: (v) => {console.log(v)},
-    error: (e) => {
-      alert("Error")
-      console.log(e)},
-    complete: () => {
-      console.log('complete')
-      alert("Data Saved")
-      this.AllStudent();
-      this.formValue.reset();
-    } })
-
+//get all employee
+  getAllEmployees(): void { 
+    this.api.getEmployees().subscribe((res) => {
+      this.allEmployees = res;
+    });
   }
-
-  AllStudent(){
-    this.api.getStudent().subscribe(res => {
-      this.allEmp = res;
-    })
+//edit employee
+  editEmployee(data: any) { 
+    this.form.setValue({
+      name: data.name,
+      department: data.department,
+      salary: data.salary,
+    });
+    this.employee.id = data.id;
   }
-
-  EditStudent(data:any){
-    this.formValue.controls['empployeeName'].setValue(data.name);
-    this.formValue.controls['department'].setValue(data.department);
-    this.formValue.controls['salary'].setValue(data.salary);
-    this.employeeObj.id = data.id;
-    this.UpdateShowBtn();
-  }
-
-  UpdateStudent(){
-    this.employeeObj.empployeeName = this.formValue.value.name;
-    this.employeeObj.department = this.formValue.value.department;
-    this.employeeObj.salary = this.formValue.value.salary;
-
-   
-  
-    this.api.putStudent(this.employeeObj,this.employeeObj.id).subscribe(res => {
+//update employee
+  updateEmployee(): void {
+    this.employee.name = this.form.value.name;
+    this.employee.department = this.form.value.department;
+    this.employee.salary = this.form.value.salary;
+    this.api.putEmployee(this.employee, this.employee.id).subscribe(() => {
       alert("Data Updated");
-      this.AllStudent();
-      this.SaveShowBtn();
-    })
-
-
+      this.getAllEmployees(); // Refresh the employee list
+      this.closeModal();
+    });
   }
-
-
-  DeleteStudent(data:any){
-    this.api.deleteStudent(data.id).subscribe(res => {
-      alert("are you sure want to delete");
-      this.AllStudent();
-    })
-
+//delete employee
+  deleteEmployee(data: any): void { // Renamed from DeleteStudent to deleteEmployee
+    if (confirm("Are you sure you want to delete?")) {
+      this.api.deleteEmployee(data.id).subscribe(() => {
+        alert("Data Deleted");
+        this.getAllEmployees(); // Refresh the employee list
+      });
+    }
   }
+//hide and show
 
-  UpdateShowBtn()
-  {
-    this.btnUpdateShow = true;
-    this.btnSaveShow = false;
+  //close the modal
+  closeModal() {
+    // Use native DOM manipulation to trigger a click event on the close button
+    this.closeModalButton?.nativeElement.click();
   }
-  SaveShowBtn()
-  {
-    this.btnUpdateShow = false;
-    this.btnSaveShow = true;
-  }
-
 }

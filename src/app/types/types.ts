@@ -1,6 +1,6 @@
 export class EmployeeInfo{
     id:number=0;
-    empployeeName:string="";
+    name:string="";
     department: string='';
     salary: string='';
   

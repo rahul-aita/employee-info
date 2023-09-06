@@ -6,22 +6,22 @@ import { AppComponent } from './app.component';
 import { RouterModule } from '@angular/router';
 import { EmployeeModule } from './employee/employee.module';
 import { HeaderComponent } from './header/header.component';
-import { UpdateEmployeeComponent } from './modal/update-employee/update-employee.component';
 import { HttpClientModule } from '@angular/common/http';
+import { ReactiveFormsModule } from '@angular/forms';
 ;
 
 @NgModule({
   declarations: [
     AppComponent,
     HeaderComponent,
-    UpdateEmployeeComponent
   ],
   imports: [
     BrowserModule,
     AppRoutingModule,
     RouterModule,
     EmployeeModule,
-    HttpClientModule
+    HttpClientModule,
+    ReactiveFormsModule
   ],
   providers: [],
   bootstrap: [AppComponent]

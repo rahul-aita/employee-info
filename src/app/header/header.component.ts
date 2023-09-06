@@ -17,5 +17,7 @@ export class HeaderComponent implements OnInit {
     
   }
  
-  
+  addStudent(){
+    this.router.navigate(['home','update'])
+  }
 }

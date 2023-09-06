@@ -1,0 +1,39 @@
+{
+  "posts": [
+    {
+      "id": 1,
+      "name": "rahul kumar ",
+      "department": "cse",
+      "salary": "10000"
+    },
+    {
+      "id": 2,
+      "department": "",
+      "salary": ""
+    },
+    {
+      "id": 3,
+      "department": "",
+      "salary": ""
+    },
+    {
+      "id": 4,
+      "department": "",
+      "salary": ""
+    },
+    {
+      "id": 5,
+      "department": "",
+      "salary": ""
+    },
+    {
+      "id": 6,
+      "department": null,
+      "salary": ""
+    }
+  ],
+  "comments": [],
+  "profile": {
+    "name": "typicode"
+  }
+}

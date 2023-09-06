@@ -1,0 +1,31 @@
+<div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="exampleModalLabel">Student credentials</h5>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" (click)="close()" aria-label="Close"></button>
+        </div>
+        <div class="modal-body">
+            <form class="row g-3">
+                <div class="col-md-6">
+                    <label for="inputName" class="form-label">Employee Name</label>
+                    <input type="text" formControlName="employeeName" class="form-control" id="inputName" required>
+                  </div>
+                  <div class="col-md-6">
+                    <label for="department" class="form-label">Department</label>
+                    <input type="department" formControlName="department" class="form-control" id="department" required>
+                  </div>
+                <div class="col-md-6">
+                  <label for="inputEmail4" class="form-label">Salary</label>
+                  <input type="salary" formControlName="salary" class="form-control" id="inputEmail4" required>
+                </div>
+              </form>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-warning"  (click)="close()" data-bs-dismiss="modal">Close</button>
+          <button *ngIf="btnSaveShow" type="button" class="btn btn-primary" (click)="AddStudent()" >Register</button>
+          <button *ngIf="btnUpdateShow" type="button" class="btn btn-primary" (click)="UpdateStudent()" >Update</button>
+        </div>
+      </div>
+    </div>
+  </div>
